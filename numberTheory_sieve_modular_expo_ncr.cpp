@@ -27,22 +27,21 @@ vector<bool> sieve(int n) {
 }
 
 void primeFactorization(int n){
-    vector<int>prime(n+1,0);
+    vector<int>SmallestPrimeFactor(n+1,0);
     for(int i=2;i<=n;i++){
-        if(prime[i]==0){
+        if(SmallestPrimeFactor[i]==0){
             for(int j=i;j<=n;j+=i){
-                if(prime[j]==0){
-                    prime[j]=i;
+                if(SmallestPrimeFactor[j]==0){
+                    SmallestPrimeFactor[j]=i;
                 }
             }
         }
     }
     while(n!=1){
-        cout<<prime[n]<<" ";
-        n/=prime[n];
+        cout<<SmallestPrimeFactor[n]<<" ";
+        n/=SmallestPrimeFactor[n];
     }
 }
-
 int modular_adddition(int a, int b, int m){
     return ((a%m)+(b%m))%m;
 }
@@ -57,14 +56,14 @@ int modular_multiplication(int a, int b, int m){
 
 int modular_exponentiation(int a, int b , int m){
     if (b==0) return 1;
-    int res=modular_exponentiation(a,b/2,m);
-    res=modular_multiplication(res,res,m);
-    if(b%2) res=modular_multiplication(res,a,m);
+    int res=modular_exponentiation(a,b/2,m);//for even number as power
+    res=modular_multiplication(res,res,m);//for even number as power
+    if(b%2) res=modular_multiplication(res,a,m);//if odd number as power
     return res;
 }
 
 int modular_inverse(int a, int m){ 
-    return modular_exponentiation(a,m-2,m);
+    return modular_exponentiation(a,m-2,m);//derived from fermert's little theorem
 }
 
 int modular_division(int a, int b, int m){
